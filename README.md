@@ -32,10 +32,13 @@ Further details of data architecture and data modeling will be explained later.
     . Transform step will use S3 Hooks/Operators built-in Airflow to retrieve only needed data.
     . Normalize data and check formats (date, lower/upper case, etc). Will perform only necessary checks
       exception handling since API is already guaranting the data quality.
+    . Use Pydantic to perform data validation.
+    . Data discretization
 
 3. Data loading:
     . The result data will be loaded in a cloud Data Warehouse.
-    	. Probabily will be using Amazon Redshift to keep everything in same cloud provider.
+    	. Probabily will be using Amazon Redshift to keep everything in same cloud provider and
+	  get used to learn AWS services.
 
 4. Data architecture (?)
     . Still need to figure-out but probably
