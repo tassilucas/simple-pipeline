@@ -1,0 +1,34 @@
+
+- Data scope:
+    . Campeonato Brasileiro - Serie A
+    . Year 2023
+    . Limited amount of teams due to API limits
+    	defined: {Fluminense: 124}
+    . Limited amount of players due to API limits:
+    	defined: {John Arias: 79674,
+		  German Cano: 13523,
+		  Nino: 10306,
+		  Ganso: 10311,
+		  Keno: 16847,
+		  Martinelli: 280245
+		  Andre: 265784,
+		  Fabio: 10080 - goalkeeper processing}
+
+* Player Statistics (player/statistics):
+    . Goals
+    . Assists
+    . Tackles
+    . Position (midfielder, atack, defense)
+    . Matches played
+    . Weight
+    . Height
+    . Nacionality
+    x IMC
+    x Goals per match
+
+* Teams (teams/statistics):
+    . Wins (home/away)
+    . Defeat (home/away)
+    . Matches (home/away)
+    . Wins per match
+    . Goal minute distribution

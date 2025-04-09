@@ -11,6 +11,7 @@ Further details of data architecture and data modeling will be explained later.
     . This API gives the information needed in JSON format but has some limitations:
     	- Only 100 requests / day for free plan,
 	  meaning the pipeline will be runned in limited daily batch
+	- 10 requests / minute
     . Some useful endpoints:
     	- /teams/statistics - information about team stats like wins, goals (home, away).
 	- /players/statistics - information about player stats like goals, shots, games, photo, etc.
@@ -34,6 +35,7 @@ Further details of data architecture and data modeling will be explained later.
       exception handling since API is already guaranting the data quality.
     . Use Pydantic to perform data validation.
     . Data discretization
+    . Threat goalkeepers with different fields like saves and conceeded for goals and defenses.
 
 3. Data loading:
     . The result data will be loaded in a cloud Data Warehouse.
