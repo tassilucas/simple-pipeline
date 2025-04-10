@@ -32,3 +32,21 @@
     . Matches (home/away)
     . Wins per match
     . Goal minute distribution
+
+-------
+
+Table: teams_information
+
+- id,
+- name,
+- photo_url,
+- matches_played,
+- wins,
+- defeats,
+- goals_scored,
+- q1_goal,
+- q2_goal,
+- q3_goal,
+- q4_goal,
+- q5_goal,
+- qn_goal
