@@ -5,14 +5,17 @@ from airflow.decorators import task
 from airflow.providers.http.sensors.http import HttpSensor
 from airflow.models import Variable
 
+import boto3
 import requests
 import os
+import json
 
 api_url = "https://v3.football.api-sports.io"
 
-# serie A
+# Serie A
 league = 71
 
+'''
 players = {
     'John Arias': 79674,
     'German Cano': 13523,
@@ -23,6 +26,7 @@ players = {
     'Andre': 265784,
     'Fabio': 10080
 }
+'''
 
 teams = {
     'Fluminense': 124
@@ -77,6 +81,17 @@ def get_team_information():
         'goals_against_away': r['response']['goals']['against']['total']['away'],
     }
 
+    return payload
+
+@task(task_id="send_data_to_s3")
+def send_data_to_aws(data):
+    s3 = boto.client('s3')
+    s3.put_object(
+        Bucket='simple-pipeline-lucastassi',
+        Body=json.dumps(data),
+        Key='/teams/' + data['name'].lower() + '.json'
+    )
+
 with DAG(
     dag_id="soccer_consuming",
     start_date=datetime(2025, 4, 9)
@@ -91,5 +106,8 @@ with DAG(
         response_check=lambda response: '"code":200' in response.text,
         poke_interval=5
     )
+
+    # ingest data into Amazon S3
+    
 
     is_api_available >> [get_team_information(), get_team_goal_statistics()]
