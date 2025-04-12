@@ -1,2 +1,2 @@
 
-Project to practice Airflow learning from the past days.
+Project to practice Airflow learning from the past days
