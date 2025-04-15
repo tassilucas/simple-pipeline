@@ -56,6 +56,8 @@ def get_team_goal_statistics():
         'q6': q['76-90']['total'],
     }
 
+    return payload
+
 @task(task_id="get_team_information")
 def get_team_information():
     params = {'league': 71, 'season': 2023, 'team': 124}
@@ -84,12 +86,18 @@ def get_team_information():
     return payload
 
 @task(task_id="send_data_to_s3")
-def send_data_to_aws(data):
-    s3 = boto.client('s3')
+def send_data_to_aws(data, path):
+    print("DATA: -->", data)
+    s3 = boto3.client(
+        's3',
+        aws_access_key_id = Variable.get('ACCESS_KEY'),
+        aws_secret_access_key = Variable.get('SECRET_KEY')
+    )
+
     s3.put_object(
         Bucket='simple-pipeline-lucastassi',
         Body=json.dumps(data),
-        Key='/teams/' + data['name'].lower() + '.json'
+        Key= path + '/' + data['name'].lower() + '.json'
     )
 
 with DAG(
@@ -107,7 +115,11 @@ with DAG(
         poke_interval=5
     )
 
-    # ingest data into Amazon S3
-    
+    x = get_team_information()
+    u = get_team_goal_statistics()
 
-    is_api_available >> [get_team_information(), get_team_goal_statistics()]
+    send_data_to_aws(x, 'teams')
+    send_data_to_aws(u, 'teams/stats')
+
+    is_api_available >> [x, u]
+
